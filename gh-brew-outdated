@@ -1,0 +1,23 @@
+#! /bin/zsh
+
+Echo "Searching for outdated formulas"
+
+brew update --quiet 2>&1 &
+
+outdated=$(brew outdated -v 2>&1)
+# Convert outdated formulas to a single line list separated by pipes:
+# libx11 (1.8.3) < 1.8.4
+# gh (2.0.3) < 2.0.4
+
+# to:
+# libx11[: ]|gh[: ]
+outdated_list=$(echo ${outdated} | awk '{print $1"[: ]|";}' | tr -d '\n' | sed 's/.$//' | sed 's/\//\\\//g' 2>&1)
+
+# Get dependencies tree
+deps=$(brew deps --formula --for-each $(brew leaves) | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/" 2>&1 &)
+
+# Highlight outdated formulas in the deps tree
+echo ${deps} | grep --color=always -i -z -E "${outdated_list}"
+
+# List outdated formulas with their latest version
+echo ${outdated}
