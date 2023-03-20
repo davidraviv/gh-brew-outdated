@@ -1,6 +1,8 @@
-# gh-brew-outdated
+# Brew Outdated
+## Description
+Github CLI extension
 
-This is a gh extension that highlights all brew outdated formulas in their dependency tree so that it is easy to understand the source of unfamiliar outdated formula.
+Highlights all brew outdated formulas in their dependency tree so that it is easy to understand the source of unfamiliar outdated formula.
 
 The extension also lists the outdated formulas in the traditional way to display the current version and the updated one.
 
